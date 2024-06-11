@@ -1,3 +1,4 @@
+using DotnetApi.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetApi.WeatherForecastController;
@@ -6,10 +7,19 @@ namespace DotnetApi.WeatherForecastController;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    public UserController()
+    DataContextDapper _dataContextDapper;
+
+    public UserController(IConfiguration configuration)
     {
+        _dataContextDapper = new DataContextDapper(configuration);
     }
-    
+
+    [HttpGet("testConnection")]
+    public DateTime TestConnection()
+    {
+        return _dataContextDapper.LoadDataSingle<DateTime>("select getdate()");
+    }
+
     [HttpGet("test/{testValue}")]
     // public IActionResult Test()
     public string[] Test(string testValue)
