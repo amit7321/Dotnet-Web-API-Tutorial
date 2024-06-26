@@ -39,13 +39,13 @@ CREATE TABLE TutorialAppSchema.UserJobInfo
 -- USE DotNetCourseDatabase;
 -- GO
 
--- SELECT  [UserId]
---         , [FirstName]
---         , [LastName]
---         , [Email]
---         , [Gender]
---         , [Active]
---   FROM  TutorialAppSchema.Users;
+SELECT  [UserId]
+        , [FirstName]
+        , [LastName]
+        , [Email]
+        , [Gender]
+        , [Active]
+  FROM  TutorialAppSchema.Users;
 
 -- SELECT  [UserId]
 --         , [Salary]

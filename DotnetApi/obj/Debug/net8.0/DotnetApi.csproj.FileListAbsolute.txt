@@ -72,3 +72,8 @@ D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\runtimes\win\lib
 D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\UserJobInfo.json
 D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\Users.json
 D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\UserSalary.json
+D:\Projects and Codes\.Net\DotnetApi\DotnetApi\obj\Debug\net8.0\DotnetApi.sourcelink.json
+D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Projects and Codes\.Net\DotnetApi\DotnetApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
