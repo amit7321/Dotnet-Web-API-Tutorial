@@ -1,4 +1,5 @@
 using DotnetApi.Data;
+using DotnetApi.Dto;
 using DotnetApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,7 +76,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult addUser(User user)
+    public IActionResult addUser(UserDto user)
     {
                 string sql = @"insert into TutorialAppSchema.Users
             (FirstName, LastName, Email, Gender, Active) valu es 
@@ -93,4 +94,18 @@ public class UserController : ControllerBase
 
         throw new Exception("Failed to update User");
     }
+
+    [HttpDelete("DeleteUser/{userId}")]
+    public IActionResult deleteUser(int userId)
+    {
+        string sql = @"delete from TutorialAppSchema.Users where UserId =" + userId.ToString();
+
+        if(_dataContextDapper.ExecuteSql(sql))
+        {
+            return Ok();
+        }
+
+        throw new Exception("Failed to delete User");
+    }       
+    
 }
