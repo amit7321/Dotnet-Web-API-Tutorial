@@ -11,11 +11,14 @@ namespace DotnetApi.Controllers;
 public class UserEFController : ControllerBase
 {
     DataContextEF _dataContextEF;
+    IUserRepository iuserRepository;
     IMapper mapper;
 
-    public UserEFController(IConfiguration configuration)
+    public UserEFController(IConfiguration configuration, IUserRepository userRepository)
     {
         _dataContextEF = new DataContextEF(configuration);
+
+        iuserRepository = userRepository;
 
         mapper = new Mapper(new MapperConfiguration(mp =>
         {
@@ -56,7 +59,7 @@ public class UserEFController : ControllerBase
             userDb.Active = user.Active;
         }
 
-        if (_dataContextEF.SaveChanges() > 0)
+        if (iuserRepository.SaveChanges())
         {
             return Ok();
         }
@@ -70,9 +73,9 @@ public class UserEFController : ControllerBase
     {
         User userDb = mapper.Map<User>(user);
 
-        _dataContextEF.Add(userDb);
+        iuserRepository.AddEntity<User>(userDb);
 
-        if (_dataContextEF.SaveChanges() > 0)
+        if (iuserRepository.SaveChanges())
         {
             return Ok();
         }
@@ -88,16 +91,17 @@ public class UserEFController : ControllerBase
 
         if (userDb != null)
         {
-            _dataContextEF.Users.Remove(userDb);
+            iuserRepository.RemoveEntity<User>(userDb);
 
-            if (_dataContextEF.SaveChanges() > 0)
+            if (iuserRepository.SaveChanges())
             {
                 return Ok();
             }
 
+            throw new Exception("Failed to delete User");
         }
 
-        throw new Exception("Failed to delete User");
+        throw new Exception("Failed to get user");
 
     }
 
