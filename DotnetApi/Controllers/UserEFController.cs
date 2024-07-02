@@ -1,3 +1,4 @@
+using AutoMapper;
 using DotnetApi.Data;
 using DotnetApi.Dto;
 using DotnetApi.Models;
@@ -10,21 +11,27 @@ namespace DotnetApi.Controllers;
 public class UserEFController : ControllerBase
 {
     DataContextEF _dataContextEF;
+    IMapper mapper;
 
     public UserEFController(IConfiguration configuration)
     {
         _dataContextEF = new DataContextEF(configuration);
+
+        mapper = new Mapper(new MapperConfiguration(mp =>
+        {
+            mp.CreateMap<UserDto, User>();
+        }));
     }
 
     [HttpGet("getUsers")]
-    public IEnumerable<User> getUsers()
+    public IEnumerable<User> GetUsers()
     {
         IEnumerable<User> users = _dataContextEF.Users.ToList<User>();
         return users;
     }
 
     [HttpGet("getSingleUser/{userId}")]
-    public User getSingleUser(int userId)
+    public User GetSingleUser(int userId)
     {
         User? user = _dataContextEF.Users.Where(x => x.UserId == userId).FirstOrDefault<User>();
 
@@ -36,7 +43,7 @@ public class UserEFController : ControllerBase
     }
 
     [HttpPut("editUser")]
-    public IActionResult editUser(User user)
+    public IActionResult EditUser(User user)
     {
         User? userDb = _dataContextEF.Users.Where(x => x.UserId == user.UserId).FirstOrDefault<User>();
 
@@ -59,15 +66,9 @@ public class UserEFController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult addUser(UserDto user)
+    public IActionResult AddUser(UserDto user)
     {
-        User userDb = new User();
-
-        userDb.FirstName = user.FirstName;
-        userDb.LastName = user.LastName;
-        userDb.Gender = user.Gender;
-        userDb.Email = user.Email;
-        userDb.Active = user.Active;
+        User userDb = mapper.Map<User>(user);
 
         _dataContextEF.Add(userDb);
 

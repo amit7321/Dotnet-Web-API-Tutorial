@@ -79,7 +79,7 @@ public class UserController : ControllerBase
     public IActionResult addUser(UserDto user)
     {
                 string sql = @"insert into TutorialAppSchema.Users
-            (FirstName, LastName, Email, Gender, Active) valu es 
+            (FirstName, LastName, Email, Gender, Active) values 
                 (firstname = ' " + user.FirstName +
                      "', '" + user.LastName +
                      "', '" + user.Email +
