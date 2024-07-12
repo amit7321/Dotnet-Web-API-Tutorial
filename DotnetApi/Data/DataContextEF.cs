@@ -15,9 +15,9 @@ public class DataContextEF : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UserJobInfo> UserJobInfos { get; set; }
+    public virtual DbSet<UserJobInfo> UserJobInfo { get; set; }
 
-    public virtual DbSet<UserSalary> UserSalaryrs { get; set; }
+    public virtual DbSet<UserSalary> UserSalary { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
     {
@@ -36,11 +36,11 @@ public class DataContextEF : DbContext
         .HasKey(e => e.UserId);
 
         modelBuilder.Entity<UserSalary>()
-        .ToTable("UserSalaryrs", "TutorialAppSchema")
+        .ToTable("UserSalary", "TutorialAppSchema")
         .HasKey(e => e.UserId);
 
         modelBuilder.Entity<UserJobInfo>()
-        .ToTable("UserJobInfos", "TutorialAppSchema")
+        .ToTable("UserJobInfo", "TutorialAppSchema")
         .HasKey(e => e.UserId);
     }
 

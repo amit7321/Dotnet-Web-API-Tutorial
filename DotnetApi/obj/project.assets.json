@@ -2882,11 +2882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
+      "projectUniqueName": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
       "projectName": "DotnetApi",
-      "projectPath": "d:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
+      "projectPath": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
       "packagesPath": "C:\\Users\\GUNNER73\\.nuget\\packages\\",
-      "outputPath": "d:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\obj\\",
+      "outputPath": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\GUNNER73\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2970,7 +2970,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

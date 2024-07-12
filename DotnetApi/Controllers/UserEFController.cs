@@ -23,26 +23,23 @@ public class UserEFController : ControllerBase
         mapper = new Mapper(new MapperConfiguration(mp =>
         {
             mp.CreateMap<UserDto, User>();
+            mp.CreateMap<UserSalary, UserSalary>();
+            mp.CreateMap<UserJobInfo, UserJobInfo>();
+
         }));
     }
 
     [HttpGet("getUsers")]
     public IEnumerable<User> GetUsers()
     {
-        IEnumerable<User> users = _dataContextEF.Users.ToList<User>();
+        IEnumerable<User> users = iuserRepository.GetUsers();
         return users;
     }
 
     [HttpGet("getSingleUser/{userId}")]
     public User GetSingleUser(int userId)
     {
-        User? user = _dataContextEF.Users.Where(x => x.UserId == userId).FirstOrDefault<User>();
-
-        if (user != null)
-        {
-            return user;
-        }
-        throw new Exception("Failed to get user");
+        return iuserRepository.GetSingleUser(userId);
     }
 
     [HttpPut("editUser")]
@@ -87,7 +84,7 @@ public class UserEFController : ControllerBase
     public IActionResult DeleteUser(int userId)
     {
 
-        User? userDb = _dataContextEF.Users.Where(x => x.UserId == userId).FirstOrDefault<User>();
+        User? userDb = iuserRepository.GetSingleUser(userId);
 
         if (userDb != null)
         {
@@ -102,6 +99,64 @@ public class UserEFController : ControllerBase
         }
 
         throw new Exception("Failed to get user");
+
+    }
+
+    [HttpGet("UserSalary/{userId}")]
+    public UserSalary GetUserSalary(int userId)
+    {
+        return iuserRepository.GetSingleUserSalary(userId);
+    }
+
+    [HttpPost("UserSalary")]
+    public IActionResult PostUserSalary(UserSalary userSalary)
+    {
+        iuserRepository.AddEntity<UserSalary>(userSalary);
+
+        if (iuserRepository.SaveChanges())
+        {
+            return Ok();
+        }
+        throw new Exception("User salary save");
+    }
+
+    [HttpPut("UserSalary")]
+    public IActionResult PutUserSalary(UserSalary userSalary)
+    {
+        UserSalary? userSalaryDb = iuserRepository.GetSingleUserSalary(userSalary.UserId);
+
+        if (userSalaryDb != null)
+        {
+            mapper.Map(userSalaryDb, userSalaryDb);
+
+            if (iuserRepository.SaveChanges())
+            {
+                return Ok();
+            }
+            throw new Exception("Failed to add User");
+
+        }
+        throw new Exception("Failed to find user salary");
+
+    }
+
+    [HttpDelete("UserSalary/{userId}")]
+    public IActionResult DeleteUserSalary(UserSalary userSalary)
+    {
+        UserSalary? userDelete = iuserRepository.GetSingleUserSalary(userSalary.UserId);
+
+        if (userDelete != null)
+        {
+            iuserRepository.RemoveEntity<UserSalary>(userDelete);
+
+            if (iuserRepository.SaveChanges())
+            {
+                return Ok();
+            }
+            throw new Exception("Failed to Delete User");
+
+        }
+        throw new Exception("Failed to find user salary");
 
     }
 
