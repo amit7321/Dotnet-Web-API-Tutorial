@@ -70,6 +70,4 @@ public class UserRepository : IUserRepository
         throw new Exception("Failed to get user job info");
     }
 
-
-
 }

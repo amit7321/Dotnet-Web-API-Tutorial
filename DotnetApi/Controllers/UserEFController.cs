@@ -127,7 +127,7 @@ public class UserEFController : ControllerBase
 
         if (userSalaryDb != null)
         {
-            mapper.Map(userSalaryDb, userSalaryDb);
+            mapper.Map(userSalary, userSalaryDb);
 
             if (iuserRepository.SaveChanges())
             {
@@ -141,9 +141,9 @@ public class UserEFController : ControllerBase
     }
 
     [HttpDelete("UserSalary/{userId}")]
-    public IActionResult DeleteUserSalary(UserSalary userSalary)
+    public IActionResult DeleteUserSalary(int userId)
     {
-        UserSalary? userDelete = iuserRepository.GetSingleUserSalary(userSalary.UserId);
+        UserSalary? userDelete = iuserRepository.GetSingleUserSalary(userId);
 
         if (userDelete != null)
         {

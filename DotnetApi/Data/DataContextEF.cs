@@ -43,8 +43,5 @@ public class DataContextEF : DbContext
         .ToTable("UserJobInfo", "TutorialAppSchema")
         .HasKey(e => e.UserId);
     }
-
-
-
-
+    
 }
