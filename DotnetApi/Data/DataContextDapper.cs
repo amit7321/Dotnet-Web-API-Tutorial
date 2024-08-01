@@ -18,7 +18,7 @@ public class DataContextDapper
         IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
         return dbConnection.Query<T>(sql);
     }
-    
+
     public T LoadDataSingle<T>(string sql)
     {
         IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
@@ -30,10 +30,31 @@ public class DataContextDapper
         IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
         return dbConnection.Execute(sql) > 0;
     }
-    
+
     public int ExecuteSqlWithCountRows(string sql)
     {
         IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
         return dbConnection.Execute(sql);
+    }
+
+    public bool ExecuteSqlWithParameter(string sql, List<SqlParameter> parameters)
+    {
+        SqlCommand sqlCommand = new SqlCommand(sql);
+
+        foreach (SqlParameter parameter in parameters)
+        {
+            sqlCommand.Parameters.Add(parameter);
+        }
+
+        SqlConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+        dbConnection.Open();
+
+        sqlCommand.Connection = dbConnection;
+        int rowsAffected = sqlCommand.ExecuteNonQuery();
+
+        dbConnection.Close();
+
+        return rowsAffected > 0;
     }
 }
