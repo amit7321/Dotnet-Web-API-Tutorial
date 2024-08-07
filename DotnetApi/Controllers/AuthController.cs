@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     [HttpPost("Login")]
     public IActionResult Login(UserForLoginDto userForLoginDto)
     {
-        string hashAndSalt = "SELECT PasswordHash, PasswordSalt FROM TutorialAppSchema.Auth WHERE Email = " + userForLoginDto.Email;
+        string hashAndSalt = "SELECT PasswordHash, PasswordSalt FROM TutorialAppSchema.Auth WHERE Email = '" + userForLoginDto.Email + "'";
 
         UserForLoginConfirmationDto userForLoginConfirmation = dataContextDapper.LoadDataSingle<UserForLoginConfirmationDto>(hashAndSalt);
 
@@ -76,7 +76,16 @@ public class AuthController : ControllerBase
 
                 if (dataContextDapper.ExecuteSqlWithParameter(addAuth, sqlParameters))
                 {
-                    return Ok();
+                    string sqlAddUser = @"insert into TutorialAppSchema.Users (FirstName, LastName, Email, Gender, Active) values 
+                    ('" + userForRegistrationDto.FirstName
+                    + "', '" + userForRegistrationDto.LastName
+                    + "' ,'" + userForRegistrationDto.Email
+                    + "', '" + userForRegistrationDto.Gender + "', 1)";
+
+                    if (dataContextDapper.ExecuteSql(sqlAddUser))
+                    {
+                        return Ok();
+                    }
 
                 }
                 throw new Exception("Failed to register user");

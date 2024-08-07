@@ -57,4 +57,9 @@ public class DataContextDapper
 
         return rowsAffected > 0;
     }
+
+    internal bool ExecuteSqlWithParameter(string sqlAddUser, DynamicParameters sqlParametersUser)
+    {
+        throw new NotImplementedException();
+    }
 }
