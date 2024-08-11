@@ -109,4 +109,9 @@ public class AuthController : ControllerBase
         );
 
     }
+
+    private string createToken(string userId)
+    {
+        
+    }
 }
