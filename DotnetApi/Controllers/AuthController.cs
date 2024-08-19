@@ -1,4 +1,6 @@
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using DotnetApi.Data;
@@ -110,8 +112,30 @@ public class AuthController : ControllerBase
 
     }
 
-    private string createToken(string userId)
+    private string createToken(int userId)
     {
-        
+        Claim[] claims = new Claim[] {
+            new Claim("userid", userId.ToString())
+        };
+
+        SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(configuration.GetSection("Appsettings:TokenKey").Value)
+        );
+
+        SigningCredentials signingCredentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha512Signature);
+
+        SecurityTokenDescriptor securityTokenDescriptor = new SecurityTokenDescriptor()
+        {
+            SigningCredentials = signingCredentials,
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.Now.AddDays(1)
+        };
+
+        JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+
+        SecurityToken securityToken = jwtSecurityTokenHandler.CreateToken(securityTokenDescriptor);
+
+        return jwtSecurityTokenHandler.WriteToken(securityToken);
+
     }
 }
