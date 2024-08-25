@@ -2877,25 +2877,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\GUNNER73\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
+      "projectUniqueName": "E:\\Projects\\.net\\Dotnet-Web-API-Tutorial\\DotnetApi\\DotnetApi.csproj",
       "projectName": "DotnetApi",
-      "projectPath": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\DotnetApi.csproj",
-      "packagesPath": "C:\\Users\\GUNNER73\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects and Codes\\.Net\\DotnetApi\\DotnetApi\\obj\\",
+      "projectPath": "E:\\Projects\\.net\\Dotnet-Web-API-Tutorial\\DotnetApi\\DotnetApi.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "E:\\Projects\\.net\\Dotnet-Web-API-Tutorial\\DotnetApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\GUNNER73\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "net8.0": {
