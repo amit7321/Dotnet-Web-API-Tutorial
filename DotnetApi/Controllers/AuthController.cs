@@ -42,7 +42,13 @@ public class AuthController : ControllerBase
             }
         }
 
-        return Ok();
+        string userIdSql = "SELECT * FROM TutorialAppSchema.Users WHERE Email = ' " + userForLoginDto.Email + "'" ;
+
+        int userId = dataContextDapper.LoadDataSingle<int>(userIdSql);
+
+        return Ok(new Dictionary<string, string>{
+            {"token", createToken(userId)}
+        });
     }
 
     [HttpPost("Register")]
