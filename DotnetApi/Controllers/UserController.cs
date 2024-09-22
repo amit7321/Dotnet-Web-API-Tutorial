@@ -1,6 +1,7 @@
 using DotnetApi.Data;
 using DotnetApi.Dto;
 using DotnetApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetApi.Controllers  ;

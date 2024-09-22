@@ -1,7 +1,10 @@
+using System.Text;
 using DotnetApi.Data;
 using DotnetApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,28 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<DataContextDapper>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+string? token = builder.Configuration.GetSection("Appsettings:TokenKey").Value;
+
+SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
+    Encoding.UTF8.GetBytes(token != null ? token.ToString() : "")
+);
+
+TokenValidationParameters tokenValidationParameters = new TokenValidationParameters()
+{
+    IssuerSigningKey = tokenKey,
+    ValidateIssuer = false,
+    ValidateIssuerSigningKey = false,
+    ValidateAudience = false
+};
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = tokenValidationParameters;
+    }
+);
+
 
 builder.Services.AddCors(options =>
 {
@@ -47,5 +72,7 @@ else
     app.UseHttpsRedirection();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();

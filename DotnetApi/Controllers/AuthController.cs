@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using DotnetApi.Data;
 using DotnetApi.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -12,6 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DotnetApi.Controllers;
 
+[Authorize]
+[ApiController]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly DataContextDapper dataContextDapper;
@@ -23,7 +27,7 @@ public class AuthController : ControllerBase
         configuration = config;
     }
 
-    [HttpPost("Login")]
+     [HttpPost("Login")]
     public IActionResult Login(UserForLoginDto userForLoginDto)
     {
         string hashAndSalt = "SELECT PasswordHash, PasswordSalt FROM TutorialAppSchema.Auth WHERE Email = '" + userForLoginDto.Email + "'";
@@ -42,9 +46,16 @@ public class AuthController : ControllerBase
             }
         }
 
-        return Ok();
+        string userIdSql = "SELECT * FROM TutorialAppSchema.Users WHERE Email = '" + userForLoginDto.Email + "'";
+
+        int userId = dataContextDapper.LoadDataSingle<int>(userIdSql);
+
+        return Ok(new Dictionary<string, string>{
+            {"token", createToken(userId)}
+        });
     }
 
+    [AllowAnonymous]
     [HttpPost("Register")]
     public IActionResult Register(UserForRegistrationDto userForRegistrationDto)
     {
@@ -98,6 +109,20 @@ public class AuthController : ControllerBase
         throw new Exception("Passwords do not match");
     }
 
+    [HttpGet("RefreshToken")]
+    public IActionResult RefreshToken()
+    {
+        string userId = User.FindFirst("userId")?.Value + "";
+
+        string userIdSql = @"select UserId from TutorialAppSchema.Users where UserId = " + userId;
+
+        int userIdFromDb = dataContextDapper.LoadDataSingle<int>(userIdSql);
+
+        return Ok(new Dictionary<string, string>{
+            {"token", createToken(userIdFromDb)}
+        });
+    }
+
     private byte[] GetPasswordHash(string password, byte[] passwordSalt)
     {
         string passwordSaltString = configuration.GetSection("AppSettings:PasswordKey").Value + Convert.ToBase64String(passwordSalt);
@@ -118,8 +143,10 @@ public class AuthController : ControllerBase
             new Claim("userid", userId.ToString())
         };
 
+        string? token = configuration.GetSection("Appsettings:TokenKey").Value;
+
         SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(configuration.GetSection("Appsettings:TokenKey").Value)
+            Encoding.UTF8.GetBytes(token != null ? token.ToString() : "")
         );
 
         SigningCredentials signingCredentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha512Signature);
