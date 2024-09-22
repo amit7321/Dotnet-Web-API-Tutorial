@@ -50,10 +50,13 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.1.44, )"
+<<<<<<< HEAD
+=======
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.8, )"
+>>>>>>> 30afc0f97c87e1daeb22a56c55bd8f927fc45224
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -74,18 +77,24 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.8, )"
+<<<<<<< HEAD
+=======
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[8.0.2, )"
+>>>>>>> 30afc0f97c87e1daeb22a56c55bd8f927fc45224
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.7.3, )"
+<<<<<<< HEAD
+=======
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.0.2, )"
+>>>>>>> 30afc0f97c87e1daeb22a56c55bd8f927fc45224
             }
           },
           "imports": [
