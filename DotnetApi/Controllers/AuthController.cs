@@ -6,6 +6,7 @@ using System.Text;
 using DotnetApi.Data;
 using DotnetApi.Dto;
 using DotnetApi.Helpers;
+using DotnetApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
@@ -124,4 +125,6 @@ public class AuthController : ControllerBase
             {"  ", authHelpers.createToken(userIdFromDb)}
         });
     }
+
+
 }
